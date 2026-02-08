@@ -23,7 +23,6 @@
       border-radius: 20px;
       text-align: center;
       box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-      max-width: 320px;
       width: 320px;
       height: 280px;
       position: relative;
@@ -41,7 +40,7 @@
       border-radius: 30px;
       font-size: 16px;
       cursor: pointer;
-      transition: 0.3s;
+      transition: transform 0.2s ease;
     }
 
     .yes {
@@ -56,8 +55,8 @@
     .no {
       background: #ddd;
       position: absolute;
-      bottom: 30px;
-      right: 30px;
+      left: 120px;
+      top: 170px;
     }
 
     .no-message {
@@ -150,14 +149,22 @@
       const btn = document.querySelector('.no');
       const card = document.getElementById('card');
 
-      const maxX = card.clientWidth - btn.clientWidth - 20;
-      const maxY = card.clientHeight - btn.clientHeight - 20;
+      let currentLeft = btn.offsetLeft;
+      let currentTop = btn.offsetTop;
 
-      const x = Math.random() * maxX;
-      const y = Math.random() * maxY;
+      const moveRange = 30; // SMALL movement only
 
-      btn.style.left = x + "px";
-      btn.style.top = y + "px";
+      let newLeft = currentLeft + (Math.random() * moveRange * 2 - moveRange);
+      let newTop = currentTop + (Math.random() * moveRange * 2 - moveRange);
+
+      const maxLeft = card.clientWidth - btn.clientWidth - 10;
+      const maxTop = card.clientHeight - btn.clientHeight - 10;
+
+      newLeft = Math.max(10, Math.min(newLeft, maxLeft));
+      newTop = Math.max(10, Math.min(newTop, maxTop));
+
+      btn.style.left = newLeft + "px";
+      btn.style.top = newTop + "px";
     }
 
     function createHeart() {
