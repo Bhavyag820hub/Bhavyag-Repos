@@ -40,6 +40,7 @@
       font-size: 16px;
       cursor: pointer;
       transition: 0.3s;
+      position: relative;
     }
 
     .yes {
@@ -144,8 +145,15 @@
       index++;
 
       const btn = document.querySelector('.no');
-      btn.style.left = Math.random() * 80 + "vw";
-      btn.style.top = Math.random() * 80 + "vh";
+      // Move only a little instead of jumping far
+      const offsetX = (Math.random() * 100 - 50); // -50px to +50px
+      const offsetY = (Math.random() * 60 - 30);  // -30px to +30px
+
+      const currentLeft = btn.offsetLeft;
+      const currentTop = btn.offsetTop;
+
+      btn.style.left = currentLeft + offsetX + "px";
+      btn.style.top = currentTop + offsetY + "px";
     }
 
     function createHeart() {
