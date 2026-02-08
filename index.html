@@ -24,6 +24,8 @@
       text-align: center;
       box-shadow: 0 20px 40px rgba(0,0,0,0.2);
       max-width: 320px;
+      width: 320px;
+      height: 280px;
       position: relative;
     }
 
@@ -54,6 +56,8 @@
     .no {
       background: #ddd;
       position: absolute;
+      bottom: 30px;
+      right: 30px;
     }
 
     .no-message {
@@ -117,7 +121,7 @@
 </head>
 
 <body>
-  <div class="card">
+  <div class="card" id="card">
     <h1>Will you be my Valentine? 💘</h1>
 
     <button class="yes" onclick="yesClicked()">Yes 💖</button>
@@ -144,8 +148,16 @@
       index++;
 
       const btn = document.querySelector('.no');
-      btn.style.left = Math.random() * 80 + "vw";
-      btn.style.top = Math.random() * 80 + "vh";
+      const card = document.getElementById('card');
+
+      const maxX = card.clientWidth - btn.clientWidth - 20;
+      const maxY = card.clientHeight - btn.clientHeight - 20;
+
+      const x = Math.random() * maxX;
+      const y = Math.random() * maxY;
+
+      btn.style.left = x + "px";
+      btn.style.top = y + "px";
     }
 
     function createHeart() {
