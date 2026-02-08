@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Be My Valentine 💖</title>
+  <title>Be My Valentine ❤️</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <style>
@@ -13,7 +13,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+      background: linear-gradient(135deg, #6CA0DC, #BFD9FF);
       overflow: hidden;
     }
 
@@ -62,6 +62,57 @@
       color: #ff4d6d;
       min-height: 20px;
     }
+
+    .heart {
+      position: fixed;
+      bottom: -20px;
+      font-size: 24px;
+      animation: floatUp 6s linear infinite;
+      opacity: 0.85;
+      pointer-events: none;
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(-110vh) scale(1.5); opacity: 0; }
+    }
+
+    .confetti {
+      position: fixed;
+      top: -10px;
+      font-size: 20px;
+      animation: confettiFall 5s linear forwards;
+    }
+
+    @keyframes confettiFall {
+      to {
+        transform: translateY(110vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    .love-text {
+      font-size: 42px;
+      font-weight: bold;
+      color: #ff4d6d;
+      min-height: 60px;
+    }
+
+    .secret-btn {
+      margin-top: 20px;
+      display: none;
+      background: #ff4d6d;
+      color: white;
+    }
+
+    .secret-box {
+      margin-top: 20px;
+      font-size: 16px;
+      color: #444;
+      max-width: 320px;
+      line-height: 1.4;
+      display: none;
+    }
   </style>
 </head>
 
@@ -81,7 +132,8 @@
       "You’re missing an angel 😇",
       "Think again… my heart can’t take this 💔",
       "Love like this doesn’t knock twice 💕",
-      "Okay… but I’ll still wait 😌"
+      "Sorry boss 😌 you’re already booked by this beauty 💖",
+      "Plot twist: you’re actually mine 😏❤️"
     ];
 
     let index = 0;
@@ -96,6 +148,62 @@
       btn.style.top = Math.random() * 80 + "vh";
     }
 
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.innerText = "❤️";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.animationDuration = (Math.random() * 3 + 4) + "s";
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 6000);
+    }
+
+    function createConfetti() {
+      for (let i = 0; i < 80; i++) {
+        const confetti = document.createElement("div");
+        confetti.className = "confetti";
+        confetti.innerText = "❤️";
+        confetti.style.left = Math.random() * 100 + "vw";
+        confetti.style.animationDuration = (Math.random() * 3 + 3) + "s";
+        document.body.appendChild(confetti);
+        setTimeout(() => confetti.remove(), 5000);
+      }
+    }
+
+    function typeText(element, text, speed = 70) {
+      let i = 0;
+      element.innerHTML = "";
+      const interval = setInterval(() => {
+        if (i < text.length) {
+          element.innerHTML += text.charAt(i);
+          i++;
+        } else {
+          clearInterval(interval);
+        }
+      }, speed);
+    }
+
+    function typeLines(element, lines, speed = 40) {
+      let lineIndex = 0;
+      let charIndex = 0;
+      element.innerHTML = "";
+
+      const interval = setInterval(() => {
+        if (charIndex < lines[lineIndex].length) {
+          element.innerHTML += lines[lineIndex].charAt(charIndex);
+          charIndex++;
+        } else {
+          lineIndex++;
+          charIndex = 0;
+          if (lineIndex < lines.length) {
+            element.innerHTML += "<br>";
+          } else {
+            clearInterval(interval);
+          }
+        }
+      }, speed);
+    }
+
     function yesClicked() {
       document.body.innerHTML = `
         <div style="
@@ -104,12 +212,46 @@
           align-items:center;
           justify-content:center;
           flex-direction:column;
-          background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+          background: linear-gradient(135deg, #6CA0DC, #BFD9FF);
           font-family: Poppins, sans-serif;
           text-align:center;">
-          <h1 style="color:#ff4d6d;">Yayyy! 💖💖💖</h1>
-          <p>You just made my Valentine perfect ❤️</p>
-        </div>`;
+          
+          <h1 id="loveText" class="love-text"></h1>
+          <p style="font-size:18px;">Forever starts now 💕</p>
+
+          <button class="secret-btn" onclick="showSecret()">
+            Open Secret 💝
+          </button>
+
+          <div id="secretBox" class="secret-box"></div>
+        </div>
+      `;
+
+      createConfetti();
+      setInterval(createHeart, 300);
+
+      typeText(
+        document.getElementById("loveText"),
+        "Love You Rowdy Baby ❤️"
+      );
+
+      setTimeout(() => {
+        document.querySelector(".secret-btn").style.display = "inline-block";
+      }, 2500);
+    }
+
+    function showSecret() {
+      const lines = [
+        "You are my Hero.",
+        "You don’t just live in my heart, you rule it.",
+        "My heart chose you long before my mind understood why.",
+        "I trust you not just with my heart, but with my future.",
+        "Love You Nana ❤️"
+      ];
+
+      const box = document.getElementById("secretBox");
+      box.style.display = "block";
+      typeLines(box, lines);
     }
   </script>
 </body>
