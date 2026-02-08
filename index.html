@@ -23,27 +23,23 @@
       border-radius: 20px;
       text-align: center;
       box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-      width: 320px;
+      max-width: 320px;
+      position: relative;
     }
 
     h1 {
       color: #ff4d6d;
-      margin-bottom: 25px;
-    }
-
-    .buttons {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 20px;
+      margin-bottom: 20px;
     }
 
     button {
       border: none;
       padding: 12px 24px;
+      margin: 10px;
       border-radius: 30px;
       font-size: 16px;
       cursor: pointer;
-      transition: transform 0.25s ease;
+      transition: 0.3s;
     }
 
     .yes {
@@ -57,10 +53,11 @@
 
     .no {
       background: #ddd;
+      position: absolute;
     }
 
     .no-message {
-      margin-top: 15px;
+      margin-top: 10px;
       font-size: 14px;
       color: #ff4d6d;
       min-height: 20px;
@@ -123,10 +120,8 @@
   <div class="card">
     <h1>Will you be my Valentine? 💘</h1>
 
-    <div class="buttons">
-      <button class="yes" onclick="yesClicked()">Yes 💖</button>
-      <button class="no" onclick="noClicked()">No 🙈</button>
-    </div>
+    <button class="yes" onclick="yesClicked()">Yes 💖</button>
+    <button class="no" onclick="noClicked()">No 🙈</button>
 
     <div id="noMessage" class="no-message"></div>
   </div>
@@ -142,24 +137,15 @@
     ];
 
     let index = 0;
-    let offsetX = 0;
-    let offsetY = 0;
 
     function noClicked() {
       document.getElementById("noMessage").innerText =
         messages[index % messages.length];
       index++;
 
-      // VERY SMALL playful movement
-      offsetX += (Math.random() * 20 - 10);
-      offsetY += (Math.random() * 10 - 5);
-
-      // Clamp movement so it stays close
-      offsetX = Math.max(-30, Math.min(30, offsetX));
-      offsetY = Math.max(-15, Math.min(15, offsetY));
-
-      document.querySelector(".no").style.transform =
-        `translate(${offsetX}px, ${offsetY}px)`;
+      const btn = document.querySelector('.no');
+      btn.style.left = Math.random() * 80 + "vw";
+      btn.style.top = Math.random() * 80 + "vh";
     }
 
     function createHeart() {
