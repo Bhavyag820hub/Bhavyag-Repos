@@ -24,28 +24,34 @@
       text-align: center;
       box-shadow: 0 20px 40px rgba(0,0,0,0.2);
       width: 320px;
-      height: 280px;
       position: relative;
     }
 
     h1 {
       color: #ff4d6d;
-      margin-bottom: 20px;
+      margin-bottom: 25px;
+    }
+
+    .btn-area {
+      position: relative;
+      height: 80px;
     }
 
     button {
       border: none;
       padding: 12px 24px;
-      margin: 10px;
       border-radius: 30px;
       font-size: 16px;
       cursor: pointer;
       transition: transform 0.2s ease;
+      position: absolute;
     }
 
     .yes {
       background: #ff4d6d;
       color: white;
+      left: 20px;
+      top: 20px;
     }
 
     .yes:hover {
@@ -54,13 +60,12 @@
 
     .no {
       background: #ddd;
-      position: absolute;
-      left: 120px;
-      top: 170px;
+      right: 20px;
+      top: 20px;
     }
 
     .no-message {
-      margin-top: 10px;
+      margin-top: 15px;
       font-size: 14px;
       color: #ff4d6d;
       min-height: 20px;
@@ -106,6 +111,7 @@
       display: none;
       background: #ff4d6d;
       color: white;
+      position: static;
     }
 
     .secret-box {
@@ -123,8 +129,10 @@
   <div class="card" id="card">
     <h1>Will you be my Valentine? 💘</h1>
 
-    <button class="yes" onclick="yesClicked()">Yes 💖</button>
-    <button class="no" onclick="noClicked()">No 🙈</button>
+    <div class="btn-area" id="btnArea">
+      <button class="yes" onclick="yesClicked()">Yes 💖</button>
+      <button class="no" onclick="noClicked()">No 🙈</button>
+    </div>
 
     <div id="noMessage" class="no-message"></div>
   </div>
@@ -147,18 +155,15 @@
       index++;
 
       const btn = document.querySelector('.no');
-      const card = document.getElementById('card');
+      const area = document.getElementById('btnArea');
 
-      let currentLeft = btn.offsetLeft;
-      let currentTop = btn.offsetTop;
+      const moveRange = 25;
 
-      const moveRange = 30; // SMALL movement only
+      let newLeft = btn.offsetLeft + (Math.random() * moveRange * 2 - moveRange);
+      let newTop = btn.offsetTop + (Math.random() * moveRange * 2 - moveRange);
 
-      let newLeft = currentLeft + (Math.random() * moveRange * 2 - moveRange);
-      let newTop = currentTop + (Math.random() * moveRange * 2 - moveRange);
-
-      const maxLeft = card.clientWidth - btn.clientWidth - 10;
-      const maxTop = card.clientHeight - btn.clientHeight - 10;
+      const maxLeft = area.clientWidth - btn.clientWidth - 10;
+      const maxTop = area.clientHeight - btn.clientHeight - 10;
 
       newLeft = Math.max(10, Math.min(newLeft, maxLeft));
       newTop = Math.max(10, Math.min(newTop, maxTop));
